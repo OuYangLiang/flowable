@@ -2,6 +2,7 @@ package com.scpt.ats.flowengine.common;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.flowable.engine.ProcessEngine;
+import org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator;
 import org.flowable.spring.ProcessEngineFactoryBean;
 import org.flowable.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -57,12 +58,16 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource, DataSourceTransactionManager transactionManager) {
+    public SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,
+                                                                       DataSourceTransactionManager transactionManager,
+                                                                       SpringIdmEngineConfigurator springIdmEngineConfigurator) {
         SpringProcessEngineConfiguration rlt = new SpringProcessEngineConfiguration();
         rlt.setDataSource(dataSource);
         rlt.setTransactionManager(transactionManager);
         rlt.setDatabaseSchemaUpdate("true");
         rlt.setAsyncExecutorActivate(false);
+        rlt.setDisableIdmEngine(false);
+        rlt.setIdmEngineConfigurator(springIdmEngineConfigurator);
 
         return rlt;
     }
