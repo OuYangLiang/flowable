@@ -1,5 +1,8 @@
-package com.scpt.ats.flowengine.idm;
+package com.scpt.ats.flowengine.common;
 
+import com.scpt.ats.flowengine.idm.ExternalGroupDataManager;
+import com.scpt.ats.flowengine.idm.ExternalIdentityClient;
+import com.scpt.ats.flowengine.idm.ExternalUserDataManager;
 import org.flowable.idm.spring.SpringIdmEngineConfiguration;
 import org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator;
 import org.springframework.context.annotation.Bean;
