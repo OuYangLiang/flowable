@@ -4,18 +4,12 @@ import org.flowable.idm.spring.SpringIdmEngineConfiguration;
 import org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class FlowableIdmConfiguration {
 
     @Bean
-    public SpringIdmEngineConfigurator springIdmEngineConfigurator(
-            DataSource dataSource,
-            PlatformTransactionManager transactionManager,
-            ExternalIdentityClient externalIdentityClient) {
+    public SpringIdmEngineConfigurator springIdmEngineConfigurator(ExternalIdentityClient externalIdentityClient) {
 
         SpringIdmEngineConfiguration idmEngineConfiguration = new SpringIdmEngineConfiguration() {
             @Override
@@ -25,9 +19,8 @@ public class FlowableIdmConfiguration {
                 super.initDataManagers();
             }
         };
-        idmEngineConfiguration.setDataSource(dataSource);
-        idmEngineConfiguration.setTransactionManager(transactionManager);
-        idmEngineConfiguration.setDatabaseSchemaUpdate("true");
+        // IDM 引擎独立配置：仅作用于身份相关表（ACT_ID_*），与 SpringProcessEngineConfiguration 上的 databaseSchemaUpdate 各管一套
+        // idmEngineConfiguration.setDatabaseSchemaUpdate("false");
 
         SpringIdmEngineConfigurator configurator = new SpringIdmEngineConfigurator();
         configurator.setIdmEngineConfiguration(idmEngineConfiguration);
